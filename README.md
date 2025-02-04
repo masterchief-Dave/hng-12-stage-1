@@ -4,15 +4,16 @@
   </a>
 </p>
 
-# HNG Stage 0 Task 🚀
+# HNG Stage 1 Task 🚀
 
 ## 📌 Description
-This is a simple project built for HNG Stage 0.
+This is a simple project built for HNG Stage 1.
 
 --- 
 ## ⚙️ Add `.env` variables
 ```bash
 NUMBER_API_URL=""
+PORT=
 ```
 
 ## 🛠️ Project Setup
