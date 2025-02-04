@@ -1,12 +1,13 @@
-import { BadRequestException, Injectable } from '@nestjs/common'
-import { armstrongNumber } from './lib/is-armstrong'
-import { digitSum } from './lib/digit-sum'
-import { isPerfectNumber } from './lib/is-perfect-number'
-import { ConfigService } from '@nestjs/config'
-import { isPrime } from './lib/is-prime'
-import { NumberPayload } from './app.interface'
 import { HttpService } from '@nestjs/axios'
+import { Injectable } from '@nestjs/common'
+import { ConfigService } from '@nestjs/config'
 import { catchError, firstValueFrom, map } from 'rxjs'
+import { NumberPayload } from './app.interface'
+import { InvalidNumberException } from './exceptions/index.exception'
+import { digitSum } from './lib/digit-sum'
+import { armstrongNumber } from './lib/is-armstrong'
+import { isPerfectNumber } from './lib/is-perfect-number'
+import { isPrime } from './lib/is-prime'
 
 @Injectable()
 export class AppService {
@@ -22,9 +23,8 @@ export class AppService {
       const response = await firstValueFrom(
         this.httpService.get(`${apiUrl}/${value}`).pipe(
           map((response) => response.data),
-          catchError((error) => {
-            console.log(error)
-            throw new BadRequestException(error.message)
+          catchError(() => {
+            throw new InvalidNumberException()
           }),
         ),
       )
@@ -55,8 +55,8 @@ export class AppService {
       const numberProperties = this.calculateNumberProperties(value)
       const response = await this.fetchFunFact(value)
       return { ...numberProperties, fun_fact: response }
-    } catch (error) {
-      throw new BadRequestException(error.message)
+    } catch {
+      throw new InvalidNumberException()
     }
   }
 }

@@ -1,5 +1,6 @@
 import { Controller, Get, HttpCode, HttpStatus, Query } from '@nestjs/common'
 import { AppService } from './app.service'
+import { InvalidNumberException } from './exceptions/index.exception'
 
 @Controller()
 export class AppController {
@@ -16,7 +17,10 @@ export class AppController {
 
   @Get('/classify-number')
   @HttpCode(HttpStatus.OK)
-  getClassification(@Query('number') number: number) {
+  getClassification(@Query('number') number: string) {
+    if (isNaN(Number(number))) {
+      throw new InvalidNumberException()
+    }
     const response = this.appService.fetchClassification(Number(number))
     return response
   }
