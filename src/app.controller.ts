@@ -17,11 +17,13 @@ export class AppController {
 
   @Get('/classify-number')
   @HttpCode(HttpStatus.OK)
-  getClassification(@Query('number') number: string) {
+  getClassification(@Query('number') number: number) {
     if (number.toString().includes('.') || isNaN(Number(number))) {
       throw new InvalidNumberException()
     }
-    const response = this.appService.fetchClassification(Number(number))
+    const response = this.appService.fetchClassification(
+      Number(Math.abs(number)),
+    )
     return response
   }
 }
