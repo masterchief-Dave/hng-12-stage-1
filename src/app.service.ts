@@ -21,10 +21,10 @@ export class AppService {
 
     try {
       const response = await firstValueFrom(
-        this.httpService.get(`${apiUrl}/${value}`).pipe(
+        this.httpService.get(`${apiUrl}/${value}/math`).pipe(
           map((response) => response.data),
-          catchError(() => {
-            throw new InvalidNumberException()
+          catchError((error) => {
+            throw new InvalidNumberException(error)
           }),
         ),
       )
@@ -56,7 +56,7 @@ export class AppService {
       const response = await this.fetchFunFact(value)
       return { ...numberProperties, fun_fact: response }
     } catch {
-      throw new InvalidNumberException()
+      throw new InvalidNumberException(value.toString())
     }
   }
 }

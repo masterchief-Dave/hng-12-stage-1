@@ -19,7 +19,7 @@ export class AppController {
   @HttpCode(HttpStatus.OK)
   getClassification(@Query('number') number: number) {
     if (number.toString().includes('.') || isNaN(Number(number))) {
-      throw new InvalidNumberException()
+      throw new InvalidNumberException(number.toString())
     }
     const response = this.appService.fetchClassification(
       Number(Math.abs(number)),
