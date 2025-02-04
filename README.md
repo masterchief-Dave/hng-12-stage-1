@@ -9,7 +9,11 @@
 ## 📌 Description
 This is a simple project built for HNG Stage 0.
 
----
+--- 
+## ⚙️ Add `.env` variables
+```bash
+NUMBER_API_URL=""
+```
 
 ## 🛠️ Project Setup
 To install dependencies, run:
